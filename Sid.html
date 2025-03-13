@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidrah's Birthday Surprise</title>
+    <style>
+        body {
+            text-align: center;
+            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+        }
+        .hidden { display: none; }
+        h1 { font-size: 45px; color: #ff4081; }
+        p { font-size: 22px; color: #333; }
+        input { padding: 10px; font-size: 18px; border-radius: 5px; width: 250px; }
+        .button {
+            background-color: #ff4081; color: white; border: none; padding: 12px 25px;
+            font-size: 18px; cursor: pointer; margin-top: 10px; border-radius: 8px;
+        }
+        .button:hover { background-color: #e91e63; }
+        .cake {
+            font-size: 80px;
+            animation: bounce 1s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .photos img {
+            width: 200px; border-radius: 10px; margin: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+        }
+        .quotes {
+            font-size: 24px;
+            color: #e91e63;
+            font-style: italic;
+            margin-top: 20px;
+        }
+        .popup {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 10px;
+            display: none;
+        }
+        .firework {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background-color: yellow;
+            border-radius: 50%;
+            animation: explode 1s ease-out infinite;
+        }
+        @keyframes explode {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(10); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div id="password-screen">
+        <h1> Enter Password to Proceed</h1>
+        <input type="password" id="passwordInput" placeholder="Enter Password">
+        <br>
+        <button class="button" onclick="checkPassword()">Unlock 🎁</button>
+        <p id="errorMessage" class="hidden"> Incorrect Password. Try Again!</p>
+    </div>
+    <div id="message-screen" class="hidden">
+        <h1 id="typing-message"></h1>
+    </div>
+    <div id="cake-screen" class="hidden">
+        <h1>🎂 Cut the Cake!</h1>
+        <p class="quotes">🎈 Blow the candle to cut the cake! 🎈</p>
+        <div class="cake">🎂</div>
+        <button class="button" onclick="showGallery(); startFireworks();">Blow 🎉</button>
+    </div>
+    <div id="photo-gallery" class="hidden">
+        <h1> Memories with سدرہظف</h1>
+        <div class="photos">
+            <img src="./WhatsApp Image 2025-03-05 at 3.20.37 AM.jpeg" alt="Photo 1" onclick="showAboutMe('You r an amazing person with a heart full of kindness and joy. every place, every room lights up when u enters!')">
+            <img src="./WhatsApp Image 2025-03-05 at 3.52.54 AM.jpeg" alt="Photo 2" onclick="showAboutMe('your dedication and love for those around u make u truly special. u always knows how to bring a smile to others. but sometimes u failed to bring that smile on particular person')">
+            <img src="./WhatsApp Image 2025-03-05 at 3.53.46 AM.jpeg" alt="Photo 3" onclick="showAboutMe('From laughter-filled moments to u caring nature, u r a treasure who deserves all the happiness in the world!')">
+            <img src="./WhatsApp Image 2025-03-05 at 3.54.28 AM.jpeg" alt="Photo 4" onclick="showAboutMe('i hope your day is as brilliantly, beautiful as u r... Bye')">
+
+        </div>
+        <button class="button" onclick="showQuotes()">Hit Me✨</button>
+    </div>
+    <div id="quotes-popup" class="popup">
+        <h2>🌟 Happy Birthday Once Again🌟</h2>
+        <p>"To a woman who is beautiful inside and out, may your birthday be as stunning as you are"</p>
+        <p>"May your birthday be as wonderful and unique as you are!"</p>
+        <p>"Every moment with you is special. Happy Birthday!"</p>
+        <button class="button" onclick="closeQuotes()">Close</button>
+    </div>
+    <div id="about-me-popup" class="popup">
+        <h2> About Me</h2>
+        <p id="about-me-text"></p>
+        <button class="button" onclick="closeAboutMe()">Close</button>
+    </div>
+    <script>
+        const correctPassword = "Ehra";
+        function checkPassword() {
+            const enteredPassword = document.getElementById("passwordInput").value;
+            if (enteredPassword === correctPassword) {
+                document.getElementById("password-screen").classList.add("hidden");
+                document.getElementById("message-screen").classList.remove("hidden");
+                startTyping();
+            } else {
+                document.getElementById("errorMessage").classList.remove("hidden");
+            }
+        }
+        function startTyping() {
+            const message = "Hey Sidrah, today is your special day! Wishing you lots of happiness and love! HAPPY BIRTHDAY🎉 ";
+            let i = 0;
+            function type() {
+                if (i < message.length) {
+                    document.getElementById("typing-message").innerHTML += message[i];
+                    i++;
+                    setTimeout(type, 100);
+                } else {
+                    setTimeout(() => {
+                        document.getElementById("message-screen").classList.add("hidden");
+                        document.getElementById("cake-screen").classList.remove("hidden");
+                    }, 2000);
+                }
+            }
+            type();
+        }
+        function showGallery() {
+            document.getElementById("cake-screen").classList.add("hidden");
+            document.getElementById("photo-gallery").classList.remove("hidden");
+        }
+        function showQuotes() {
+            document.getElementById("quotes-popup").style.display = "block";
+        }
+        function closeQuotes() {
+            document.getElementById("quotes-popup").style.display = "none";
+        }
+        function showAboutMe(story) {
+            document.getElementById("about-me-text").innerText = story;
+            document.getElementById("about-me-popup").style.display = "block";
+        }
+        function closeAboutMe() {
+            document.getElementById("about-me-popup").style.display = "none";
+        }
+        function startFireworks() {
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    const firework = document.createElement("div");
+                    firework.classList.add("firework");
+                    firework.style.left = Math.random() * 100 + "vw";
+                    firework.style.top = Math.random() * 100 + "vh";
+                    document.body.appendChild(firework);
+                    setTimeout(() => firework.remove(), 1000);
+                }, i * 200);
+            }
+        }
+    </script>
+</body>
+</html>
